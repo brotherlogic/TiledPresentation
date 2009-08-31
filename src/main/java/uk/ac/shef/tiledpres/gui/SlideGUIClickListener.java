@@ -1,4 +1,4 @@
-package uk.ac.shef.slides.gui;
+package uk.ac.shef.tiledpres.gui;
 
 import java.awt.event.KeyEvent;
 

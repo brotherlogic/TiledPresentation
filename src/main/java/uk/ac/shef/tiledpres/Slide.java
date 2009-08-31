@@ -1,4 +1,4 @@
-package uk.ac.shef.slides;
+package uk.ac.shef.tiledpres;
 
 import edu.umd.cs.piccolo.PNode;
 import edu.umd.cs.piccolo.nodes.PImage;

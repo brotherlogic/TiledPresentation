@@ -1,10 +1,10 @@
-package uk.ac.shef.slides.gui;
+package uk.ac.shef.tiledpres.gui;
 
 import java.awt.geom.Point2D;
 import java.util.List;
 import java.util.Map;
 
-import uk.ac.shef.slides.Slide;
+import uk.ac.shef.tiledpres.Slide;
 
 public interface LayoutManager
 {

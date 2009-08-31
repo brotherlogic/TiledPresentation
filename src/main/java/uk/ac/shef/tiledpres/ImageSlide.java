@@ -1,9 +1,6 @@
-package uk.ac.shef.slides;
+package uk.ac.shef.tiledpres;
 
-import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -43,9 +40,7 @@ public class ImageSlide extends Slide
 			{
 				PNode imagePart;
 				if (imageURL != null)
-				{
 					imagePart = new PImage(imageURL);
-				}
 				else
 				{
 					BufferedImage img = ImageIO.read(is);

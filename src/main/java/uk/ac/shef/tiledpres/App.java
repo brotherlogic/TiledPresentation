@@ -1,4 +1,4 @@
-package uk.co.shef.tiledpres;
+package uk.ac.shef.tiledpres;
 
 /**
  * Hello world!
