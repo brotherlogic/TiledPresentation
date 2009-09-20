@@ -72,7 +72,7 @@ public class SlideController
 
 		List<Slide> slides = cont
 				.loadImageSlides(new File(
-						"/home/sat/local/Dropbox/weknowit/hci2009/presentation/slide-images/pres-v1/"));
+						"./images/"));
 		SlideGUI gui = new SlideGUI(slides);
 		gui.setVisible(true);
 	}
