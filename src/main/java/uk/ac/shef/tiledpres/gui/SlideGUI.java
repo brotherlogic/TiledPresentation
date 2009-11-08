@@ -60,6 +60,7 @@ public class SlideGUI extends PFrame
 		{
 			public void keyPressed(KeyEvent e)
 			{
+				System.err.println("KEY = " + e.getKeyCode());
 				if (e.getKeyCode() == KeyEvent.VK_SPACE)
 					showAllSlides();
 				else if (e.getKeyCode() == KeyEvent.VK_LEFT)
@@ -67,7 +68,7 @@ public class SlideGUI extends PFrame
 				else if (e.getModifiers() == KeyEvent.ALT_MASK
 						&& e.getKeyCode() == KeyEvent.VK_ENTER)
 					fullscreen();
-				else if (e.getModifiers() != KeyEvent.ALT_MASK)
+				else if (e.getModifiers() != KeyEvent.ALT_MASK && e.getModifiers() != KeyEvent.META_MASK)
 					next();
 			}
 		});

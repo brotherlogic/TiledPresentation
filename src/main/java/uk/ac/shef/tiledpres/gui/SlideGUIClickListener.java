@@ -23,10 +23,11 @@ public class SlideGUIClickListener extends PBasicInputEventHandler
 	@Override
 	public void keyPressed(PInputEvent event)
 	{
+		System.err.println("KEY = "  + event.getKeyCode());
 		if (event.getKeyCode() == KeyEvent.VK_LEFT)
 			gui.prev();
-		else
-			gui.next();
+		else if (event.getKeyCode() != KeyEvent.VK_ALT && event.getKeyCode() != KeyEvent.VK_TAB)
+			gui.next();			
 	}
 
 }

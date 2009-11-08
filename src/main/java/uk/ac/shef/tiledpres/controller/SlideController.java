@@ -72,7 +72,7 @@ public class SlideController
 
 		List<Slide> slides = cont
 				.loadImageSlides(new File(
-						"./images/"));
+						"/Users/sat/local/Dropbox/oak/research-presentation/images/"));
 		SlideGUI gui = new SlideGUI(slides);
 		gui.setVisible(true);
 	}
