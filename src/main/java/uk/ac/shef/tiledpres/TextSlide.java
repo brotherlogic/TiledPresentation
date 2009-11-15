@@ -3,20 +3,40 @@ package uk.ac.shef.tiledpres;
 import edu.umd.cs.piccolo.PNode;
 import edu.umd.cs.piccolo.nodes.PText;
 
+/**
+ * A slide constructed just from text
+ * 
+ * @author sat
+ * 
+ */
 public class TextSlide extends Slide
 {
-	String headline;
-	String[] bullets;
+	/** The title of the slide */
+	private final String headline;
 
-	public TextSlide(String title, String headline, String[] bullets)
+	/** The bullet points connected to the slide */
+	private final String[] bullets;
+
+	/**
+	 * Constructor
+	 * 
+	 * @param title
+	 *            The title to display for this slide
+	 * @param headlineIn
+	 *            The title of the slide
+	 * @param bulletsIn
+	 *            The bullet points for this slide
+	 */
+	public TextSlide(final String title, final String headlineIn, final String[] bulletsIn)
 	{
 		super(title);
 
-		this.headline = headline;
-		this.bullets = bullets;
+		this.headline = headlineIn;
+		this.bullets = bulletsIn;
 	}
 
-	public PNode getSlide()
+	@Override
+	public final PNode getSlide()
 	{
 		PText headNode = new PText(headline);
 		PNode[] bNode = new PNode[bullets.length];
@@ -34,8 +54,7 @@ public class TextSlide extends Slide
 
 		for (int i = 0; i < bNode.length; i++)
 		{
-			bNode[i].setBounds(0, yLoc, bNode[i].getWidth(), bNode[i]
-					.getHeight());
+			bNode[i].setBounds(0, yLoc, bNode[i].getWidth(), bNode[i].getHeight());
 			thisNode.addChild(bNode[i]);
 			yLoc += bNode[i].getHeight();
 

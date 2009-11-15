@@ -9,31 +9,22 @@ import uk.ac.shef.tiledpres.ImageSlide;
 import uk.ac.shef.tiledpres.Slide;
 import uk.ac.shef.tiledpres.gui.SlideGUI;
 
-import com.sun.star.comp.helper.Bootstrap;
-import com.sun.star.lang.XMultiComponentFactory;
-import com.sun.star.uno.XComponentContext;
-
+/**
+ * Controller for the slide display
+ * 
+ * @author sat
+ * 
+ */
 public class SlideController
 {
-	public List<Slide> convertFromOpenOffice(File ooPres) throws Exception
-	{
-		List<Slide> slides = new LinkedList<Slide>();
-
-		// get the remote office component context
-		XComponentContext xRemoteContext = Bootstrap.bootstrap();
-		if (xRemoteContext == null)
-			System.err.println("ERROR: Could not bootstrap default Office.");
-
-		XMultiComponentFactory xRemoteServiceManager = xRemoteContext
-				.getServiceManager();
-
-		Object desktop = xRemoteServiceManager.createInstanceWithContext(
-				"com.sun.star.frame.Desktop", xRemoteContext);
-
-		return slides;
-	}
-
-	public List<Slide> loadImageSlides(File dir)
+	/**
+	 * Loads the images for the slideshow from a specific directory
+	 * 
+	 * @param dir
+	 *            The directory to load the files from
+	 * @return An ordered list of slides
+	 */
+	public final List<Slide> loadImageSlides(final File dir)
 	{
 		List<File> fNames = new LinkedList<File>();
 
@@ -55,10 +46,8 @@ public class SlideController
 			try
 			{
 				// slides.add(new ImageSlide(fNames.get(i), fNames.get(i)));
-				slides.add(new ImageSlide(fNames.get(i).getName(), fNames
-						.get(i).toURI().toURL()));
-			}
-			catch (Exception e)
+				slides.add(new ImageSlide(fNames.get(i).getName(), fNames.get(i).toURI().toURL()));
+			} catch (Exception e)
 			{
 				System.err.println("Unable to read: " + fNames.get(i));
 				e.printStackTrace();
@@ -66,13 +55,20 @@ public class SlideController
 		return slides;
 	}
 
-	public static void main(String[] args) throws Exception
+	/**
+	 * Main method
+	 * 
+	 * @param args
+	 *            Command lines are ignored
+	 * @throws Exception
+	 *             if something goes wrong
+	 */
+	public static void main(final String[] args) throws Exception
 	{
 		SlideController cont = new SlideController();
 
-		List<Slide> slides = cont
-				.loadImageSlides(new File(
-						"/Users/sat/local/Dropbox/oak/research-presentation/images/"));
+		List<Slide> slides = cont.loadImageSlides(new File(
+				"/Users/sat/local/Dropbox/oak/research-presentation/images/"));
 		SlideGUI gui = new SlideGUI(slides);
 		gui.setVisible(true);
 	}

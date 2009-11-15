@@ -8,9 +8,16 @@ import java.util.TreeMap;
 
 import uk.ac.shef.tiledpres.Slide;
 
+/**
+ * Describes the slides layed out purely in a linear style
+ * 
+ * @author sat
+ * 
+ */
 public class LinearLayout implements LayoutManager
 {
-	public Map<String, Point2D.Double> layoutSlides(List<Slide> slides)
+	@Override
+	public final Map<String, Point2D.Double> layoutSlides(final List<Slide> slides)
 	{
 		double y = 0;
 		double x = 0;

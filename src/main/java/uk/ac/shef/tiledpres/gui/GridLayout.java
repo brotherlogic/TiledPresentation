@@ -8,9 +8,16 @@ import java.util.TreeMap;
 
 import uk.ac.shef.tiledpres.Slide;
 
+/**
+ * Defines the layout for the slides
+ * 
+ * @author sat
+ * 
+ */
 public class GridLayout implements LayoutManager
 {
-	public Map<String, Double> layoutSlides(List<Slide> slides)
+	@Override
+	public final Map<String, Double> layoutSlides(final List<Slide> slides)
 	{
 		int gridSize = (int) Math.ceil(Math.sqrt(slides.size()));
 
@@ -22,16 +29,14 @@ public class GridLayout implements LayoutManager
 		Map<String, Point2D.Double> layout = new TreeMap<String, Double>();
 		for (int i = 0; i < slides.size(); i++)
 		{
-			layout.put(slides.get(i).getTitle(), new Point2D.Double(currX,
-					currY));
+			layout.put(slides.get(i).getTitle(), new Point2D.Double(currX, currY));
 			maxY = Math.max(maxY, currY + slides.get(i).getNode().getHeight());
 
 			if ((i + 1) % gridSize == 0)
 			{
 				currX = 0;
 				currY = maxY;
-			}
-			else
+			} else
 				currX += slides.get(i).getNode().getWidth();
 		}
 

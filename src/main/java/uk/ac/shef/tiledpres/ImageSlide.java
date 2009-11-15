@@ -10,26 +10,53 @@ import javax.imageio.ImageIO;
 import edu.umd.cs.piccolo.PNode;
 import edu.umd.cs.piccolo.nodes.PImage;
 
+/**
+ * A slide represented by a single image
+ * 
+ * @author sat
+ * 
+ */
 public class ImageSlide extends Slide
 {
-	URL imageURL;
-	InputStream is;
+	/** The URL pointing to the image */
+	private URL imageURL;
 
-	PNode node;
+	/** An input stream to read the slide from */
+	private InputStream is;
 
-	public ImageSlide(String title, InputStream streamToImage)
+	/** The underlying PNode that is represented by this slide */
+	private PNode node;
+
+	/**
+	 * Constructor for the Image Slide
+	 * 
+	 * @param title
+	 *            The title of this slide
+	 * @param streamToImage
+	 *            An @link{InputStream} for the slide image data
+	 */
+	public ImageSlide(final String title, final InputStream streamToImage)
 	{
 		super(title);
 		is = streamToImage;
 	}
 
-	public ImageSlide(String title, URL imageURL)
+	/**
+	 * Constructor for the image slide
+	 * 
+	 * @param title
+	 *            The title of the slide
+	 * @param imageURLIn
+	 *            The URL that points to the slide image data
+	 */
+	public ImageSlide(final String title, final URL imageURLIn)
 	{
 		super(title);
-		this.imageURL = imageURL;
+		this.imageURL = imageURLIn;
 	}
 
-	public PNode getSlide()
+	@Override
+	public final PNode getSlide()
 	{
 		if (node == null)
 		{
@@ -53,8 +80,7 @@ public class ImageSlide extends Slide
 
 				node.setWidth(imagePart.getWidth());
 				node.setHeight(imagePart.getHeight());
-			}
-			catch (IOException e)
+			} catch (IOException e)
 			{
 				System.err.println("Unable to load image - ignoring");
 				e.printStackTrace();

@@ -16,23 +16,47 @@ import uk.ac.shef.tiledpres.Slide;
 import edu.umd.cs.piccolo.PNode;
 import edu.umd.cs.piccolox.PFrame;
 
+/**
+ * The main GUI for the slide display
+ * 
+ * @author sat
+ * 
+ */
 public class SlideGUI extends PFrame
 {
-	List<Slide> slides;
+	/** The serial version number */
+	private static final long serialVersionUID = -325705316111220691L;
 
-	LayoutManager layout = new GridLayout();
+	/** Transition time between slides */
+	private static final long WAIT_TIME = 2000;
 
-	double maxX = 0;
+	/** The slides being displayed */
+	private final List<Slide> slides;
 
-	double maxY = 0;
+	/** The layout manager used in the slide GUI */
+	private final LayoutManager layout = new GridLayout();
 
-	Map<Rectangle2D, Integer> titleToBounds = new HashMap<Rectangle2D, Integer>();
+	/** The maximum X location */
+	private double maxX = 0;
 
-	int currSlide = -1;
+	/** The maximum Y location */
+	private double maxY = 0;
 
-	public SlideGUI(List<Slide> slides)
+	/** Mpas the slide bounds to the slide number */
+	private final Map<Rectangle2D, Integer> titleToBounds = new HashMap<Rectangle2D, Integer>();
+
+	/** The current slide being displayed */
+	private int currSlide = -1;
+
+	/**
+	 * Constructor for the slide GUI
+	 * 
+	 * @param slidesIn
+	 *            The list of slides to display
+	 */
+	public SlideGUI(final List<Slide> slidesIn)
 	{
-		this.slides = slides;
+		this.slides = slidesIn;
 
 		setFullScreenMode(true);
 		SwingUtilities.invokeLater(new Runnable()
@@ -48,7 +72,8 @@ public class SlideGUI extends PFrame
 
 		this.addComponentListener(new ComponentAdapter()
 		{
-			public void componentResized(ComponentEvent e)
+			@Override
+			public void componentResized(final ComponentEvent e)
 			{
 				showAllSlides();
 			}
@@ -58,7 +83,8 @@ public class SlideGUI extends PFrame
 		this.getCanvas().addInputEventListener(clickListener);
 		this.getCanvas().addKeyListener(new KeyAdapter()
 		{
-			public void keyPressed(KeyEvent e)
+			@Override
+			public void keyPressed(final KeyEvent e)
 			{
 				System.err.println("KEY = " + e.getKeyCode());
 				if (e.getKeyCode() == KeyEvent.VK_SPACE)
@@ -68,49 +94,67 @@ public class SlideGUI extends PFrame
 				else if (e.getModifiers() == KeyEvent.ALT_MASK
 						&& e.getKeyCode() == KeyEvent.VK_ENTER)
 					fullscreen();
-				else if (e.getModifiers() != KeyEvent.ALT_MASK && e.getModifiers() != KeyEvent.META_MASK)
+				else if (e.getModifiers() != KeyEvent.ALT_MASK
+						&& e.getModifiers() != KeyEvent.META_MASK)
 					next();
 			}
 		});
 	}
 
-	public void fullscreen()
+	/**
+	 * Sets the GUI to display in full screen mode
+	 */
+	public final void fullscreen()
 	{
 		this.setFullScreenMode(!this.isFullScreenMode());
 	}
 
-	public void next()
+	/**
+	 * Transitions to the next slide
+	 */
+	public final void next()
 	{
 		currSlide++;
 		currSlide %= slides.size();
 
 		for (Rectangle2D bounds : titleToBounds.keySet())
 			if (titleToBounds.get(bounds) == currSlide)
-				this.getCanvas().getCamera().animateViewToCenterBounds(bounds,
-						true, 2000);
+				this.getCanvas().getCamera().animateViewToCenterBounds(bounds, true, WAIT_TIME);
 	}
 
-	public void prev()
+	/**
+	 * Transitions to the previous slide
+	 */
+	public final void prev()
 	{
 		currSlide--;
 		for (Rectangle2D bounds : titleToBounds.keySet())
 			if (titleToBounds.get(bounds) == currSlide)
-				this.getCanvas().getCamera().animateViewToCenterBounds(bounds,
-						true, 2000);
+				this.getCanvas().getCamera().animateViewToCenterBounds(bounds, true, WAIT_TIME);
 	}
 
-	public void selectSlide(double x, double y)
+	/**
+	 * Selects a slide at the given coordinates
+	 * 
+	 * @param x
+	 *            The x coordinate of the selection point
+	 * @param y
+	 *            The y coordinate of the selection point
+	 */
+	public final void selectSlide(final double x, final double y)
 	{
 		for (Rectangle2D bounds : titleToBounds.keySet())
 			if (bounds.contains(x, y))
 			{
-				this.getCanvas().getCamera().animateViewToCenterBounds(bounds,
-						true, 2000);
+				this.getCanvas().getCamera().animateViewToCenterBounds(bounds, true, WAIT_TIME);
 				currSlide = titleToBounds.get(bounds);
 			}
 	}
 
-	public void setupDisplay()
+	/**
+	 * Prepares the display
+	 */
+	public final void setupDisplay()
 	{
 		Map<String, Point2D.Double> locMap = layout.layoutSlides(slides);
 		maxX = 0;
@@ -122,11 +166,11 @@ public class SlideGUI extends PFrame
 
 			this.getCanvas().getLayer().addChild(node);
 			Point2D.Double location = locMap.get(slides.get(i).getTitle());
-			node.animateToPositionScaleRotation(location.getX(), location
-					.getY(), 1.0, 0.0, 2000);
+			node.animateToPositionScaleRotation(location.getX(), location.getY(), 1.0, 0.0,
+					WAIT_TIME);
 
-			titleToBounds.put(new Rectangle2D.Double(location.getX(), location
-					.getY(), node.getWidth(), node.getHeight()), i);
+			titleToBounds.put(new Rectangle2D.Double(location.getX(), location.getY(), node
+					.getWidth(), node.getHeight()), i);
 
 			maxX = Math.max(location.getX() + node.getWidth(), maxX);
 			maxY = Math.max(maxY, location.getY() + node.getHeight());
@@ -134,9 +178,12 @@ public class SlideGUI extends PFrame
 
 	}
 
-	public void showAllSlides()
+	/**
+	 * Displays all the slides
+	 */
+	public final void showAllSlides()
 	{
 		this.getCanvas().getCamera().animateViewToCenterBounds(
-				new Rectangle2D.Double(0, 0, maxX, maxY), true, 2000);
+				new Rectangle2D.Double(0, 0, maxX, maxY), true, WAIT_TIME);
 	}
 }
