@@ -47,7 +47,8 @@ public class SlideController
 			{
 				// slides.add(new ImageSlide(fNames.get(i), fNames.get(i)));
 				slides.add(new ImageSlide(fNames.get(i).getName(), fNames.get(i).toURI().toURL()));
-			} catch (Exception e)
+			}
+			catch (Exception e)
 			{
 				System.err.println("Unable to read: " + fNames.get(i));
 				e.printStackTrace();
@@ -67,8 +68,7 @@ public class SlideController
 	{
 		SlideController cont = new SlideController();
 
-		List<Slide> slides = cont.loadImageSlides(new File(
-				"/Users/sat/local/Dropbox/oak/research-presentation/images/"));
+		List<Slide> slides = cont.loadImageSlides(new File(args[0]));
 		SlideGUI gui = new SlideGUI(slides);
 		gui.setVisible(true);
 	}

@@ -86,7 +86,10 @@ public class SlideGUI extends PFrame
 			@Override
 			public void keyPressed(final KeyEvent e)
 			{
-				System.err.println("KEY = " + e.getKeyCode());
+				System.err.println("KEY = " + e.getKeyCode() + " where ENTER = "
+						+ KeyEvent.VK_ENTER);
+				System.err.println("MOD = " + e.getModifiers() + " where ALT = "
+						+ KeyEvent.ALT_MASK);
 				if (e.getKeyCode() == KeyEvent.VK_SPACE)
 					showAllSlides();
 				else if (e.getKeyCode() == KeyEvent.VK_LEFT)
